@@ -10,11 +10,11 @@ package sudoku;
  * @author murat
  */
 public class Sudoku {
-     static int userGrid[][]=new int[][]
+      static int userGrid[][]=new int[][]
            {{0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,1,0,0,0},
+            {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
@@ -35,18 +35,24 @@ public class Sudoku {
         System.out.println("That took "+(timeEnd-timeStart)+" millis to complete.");
     }
     public static int[][] loop(int y, int x, int[][] grid) {
-        while(!validity(8, 8, grid) || grid[8][8]==0)
+        while(!validity(8, 8, grid) || grid[8][8]==0)//while not solved
         {
-            if (grid[y][x]<9) {//going forward
-                grid[y][x]++;
-                if (validity(y, x, grid)) {
-                    int yy, xx;
-                    if (x==8) {yy=y+1; xx=0;} else {yy=y; xx=x+1;}
-                    loop(yy, xx, grid);
-                }
+            if (userGrid[y][x]!=0) {
+                int yy, xx;
+                if (x==8) {yy=y+1; xx=0;} else {yy=y; xx=x+1;}
+                loop(yy, xx, grid);
             } else {
-                grid[y][x]=0;
-                break;
+                if (grid[y][x]<9) {//going forward
+                    grid[y][x]++;
+                    if (validity(y, x, grid)) {
+                        int yy, xx;
+                        if (x==8) {yy=y+1; xx=0;} else {yy=y; xx=x+1;}
+                        loop(yy, xx, grid);
+                    }
+                } else {
+                    grid[y][x]=0;
+                    break;
+                }
             }
         }
         return grid;
@@ -72,5 +78,4 @@ public class Sudoku {
             System.out.println();
         }
     }
-    
 }
