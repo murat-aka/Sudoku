@@ -31,12 +31,15 @@ public class Sudoku {
         System.out.println(validity(0, 0, grid));
         print(grid);
     }
+    public static int[][] loop(int y, int x, int[][] grid) {
+        return grid;
+    }
     public static boolean validity(int x, int y, int[][] grid) {
         String temp="";
         for (int i=0;i<9;i++) {
             temp+=Integer.toString(grid[i][y]);//horizontal
             temp+=Integer.toString(grid[x][i]);//verical
-            temp+=Integer.toString(grid[(x/3)*+i/3][(y/3)*3+i%3]);//square
+            temp+=Integer.toString(grid[(x/3)*3+i/3][(y/3)*3+i%3]);//square
         }
         int count=0, idx=0;
         while ((idx=temp.indexOf(Integer.toString(grid[x][y]), idx))!=-1)
