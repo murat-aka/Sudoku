@@ -10,11 +10,11 @@ package sudoku;
  * @author murat
  */
 public class Sudoku {
- static int userGrid[][]=new int[][]
-           {{1,0,0,0,0,0,0,0,0},
+     static int userGrid[][]=new int[][]
+           {{0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
-            {0,0,0,0,0,0,0,0,0},
+            {0,0,0,0,0,1,0,0,0},
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
             {0,0,0,0,0,0,0,0,0},
@@ -28,10 +28,27 @@ public class Sudoku {
                 grid[i][j]=userGrid[i][j];
             }
         }
-        System.out.println(validity(0, 0, grid));
         print(grid);
+        double timeStart=System.currentTimeMillis();
+        print(loop(0, 0, grid));
+        double timeEnd=System.currentTimeMillis();
+        System.out.println("That took "+(timeEnd-timeStart)+" millis to complete.");
     }
     public static int[][] loop(int y, int x, int[][] grid) {
+        while(!validity(8, 8, grid) || grid[8][8]==0)
+        {
+            if (grid[y][x]<9) {//going forward
+                grid[y][x]++;
+                if (validity(y, x, grid)) {
+                    int yy, xx;
+                    if (x==8) {yy=y+1; xx=0;} else {yy=y; xx=x+1;}
+                    loop(yy, xx, grid);
+                }
+            } else {
+                grid[y][x]=0;
+                break;
+            }
+        }
         return grid;
     }
     public static boolean validity(int x, int y, int[][] grid) {
